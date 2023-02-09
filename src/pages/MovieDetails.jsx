@@ -1,14 +1,14 @@
 import { useParams, Outlet, Link, useLocation } from 'react-router-dom';
 import { FlexContainer, Img, Content } from './MovieDetails.styled';
 import { fetchGetFilmsId } from '../api/api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BackLink } from 'components/BackLink/BackLink';
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
   const [filmItem, setFilmItem] = useState({});
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const locRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     async function getFilmsId() {
@@ -26,7 +26,7 @@ export const MovieDetails = () => {
 
   return (
     <>
-      <BackLink to={backLinkHref}>Back to products</BackLink>
+      <BackLink to={locRef.current}>Back to products</BackLink>
       <FlexContainer>
         <Img src={imgPath}></Img>
         <Content>
